@@ -1,3 +1,24 @@
+# Ghost Inspector Netlify Plugin
+
+The official Netlify plugin for [Ghost Inspector](https://ghostinspector.com).
+
+## Installation
+
+Our official Netlify plugin is available from [npm](https://www.npmjs.com/), you can install it with the following command:
+
+```
+npm install --save-dev netlify-plugin-ghost-inspector
+```
+
+Next, add the following to your `netlify.toml` ([Netlify configuration file](https://docs.netlify.com/configure-builds/file-based-configuration/))
+
+```
+[[plugins]]
+package = "netlify-plugin-ghost-inspector"
+```
+
+### Netlify Environment Variables
+
 This plugin will trigger a Ghost Inspector test suite against your Netlify deploy preview URL for every build started by a PR. To make this work, you will need to add a few environment variables in Netlify:
 - `GHOST_INSPECTOR_API_KEY` - Ghost Inspector API Key, which can be found in your [account settings](https://app.ghostinspector.com/account)
 - `GHOST_INSPECTOR_SUITE` - Ghost Inspector suite ID. To find your suite ID, navigate to the suite you want to use and copy the ID in the URL (after /suites/).
