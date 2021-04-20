@@ -1,0 +1,13 @@
+name: lint and test
+on:
+  pull_request:
+    branches: [stable]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: npm install
+      - name: Run ESLint
+        run: npm run lint
