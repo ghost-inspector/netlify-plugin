@@ -1,0 +1,28 @@
+{
+	"extends": [
+		"standard",
+		"prettier"
+	],
+	"parserOptions": {
+		"ecmaVersion": 8
+	},
+	"overrides": [
+		{
+			"files": [
+				"test/**/*"
+			],
+			"globals": {
+				"describe": true,
+				"it": true,
+				"before": true,
+				"beforeEach": true,
+				"after": true,
+				"afterEach": true
+			},
+			"rules": {
+				"no-unused-vars": "off",
+				"no-unused-expressions": "off"
+			}
+		}
+	]
+}

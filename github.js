@@ -16,6 +16,7 @@ exports.updateGithubStatus = async ({
   sha,
   state,
   description,
+  // eslint-disable-next-line camelcase
   target_url,
 }) => {
   const octokit = new Octokit({ auth })
