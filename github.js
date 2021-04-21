@@ -11,30 +11,32 @@ const { Octokit } = require("@octokit/rest")
  *
  * @returns Promise
  */
-exports.updateGithubStatus = async ({
-  auth,
-  sha,
-  state,
-  description,
-  // eslint-disable-next-line camelcase
-  target_url,
-}) => {
-  const octokit = new Octokit({ auth })
+module.exports = {
+  updateGithubStatus: async ({
+    auth,
+    sha,
+    state,
+    description,
+    // eslint-disable-next-line camelcase
+    target_url,
+  }) => {
+    const octokit = new Octokit({ auth })
 
-  try {
-    const [owner, repo] = process.env.REPOSITORY_URL.split(
-      "github.com/"
-    )[1].split("/")
-    await octokit.request("POST /repos/{owner}/{repo}/statuses/{sha}", {
-      owner,
-      repo,
-      sha,
-      state,
-      description,
-      context: "Ghost Inspector E2E Tests",
-      target_url,
-    })
-  } catch (error) {
-    throw Error(error)
+    try {
+      const [owner, repo] = process.env.REPOSITORY_URL.split(
+        "github.com/"
+      )[1].split("/")
+      await octokit.request("POST /repos/{owner}/{repo}/statuses/{sha}", {
+        owner,
+        repo,
+        sha,
+        state,
+        description,
+        context: "Ghost Inspector E2E Tests",
+        target_url,
+      })
+    } catch (error) {
+      throw Error(error)
+    }
   }
 }

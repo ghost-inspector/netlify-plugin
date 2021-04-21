@@ -40,7 +40,6 @@ module.exports = {
         `Missing env variable for GHOST_INSPECTOR_API_KEY`
       )
     }
-    const GhostInspector = ghostInspectorClient(ghostInspectorApiKey)
 
     // Check to ensure we have our Suite ID
     const suiteId = process.env.GHOST_INSPECTOR_SUITE
@@ -51,6 +50,7 @@ module.exports = {
     }
 
     try {
+      const GhostInspector = ghostInspectorClient(ghostInspectorApiKey)
       console.log(`👻 Starting Ghost Inspector E2E tests on ${deployUrl} ...`)
 
       // Make API request to Ghost Inspector API
