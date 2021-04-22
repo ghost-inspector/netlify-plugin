@@ -1,0 +1,3 @@
+[[plugins]]
+# local plugin will test our site after it is deployed
+package = "."
