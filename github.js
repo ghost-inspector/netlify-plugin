@@ -1,6 +1,4 @@
 const { Octokit } = require("@octokit/rest")
-const repoName = require('git-repo-name')
-const userName = require('git-username')
 
 /**
  * Update a commit status in GitHub
@@ -25,8 +23,11 @@ module.exports = {
     const octokit = new Octokit({ auth })
 
     try {
-      const repo = repoName.sync()
-      const owner = userName.sync()
+      const [owner, repoWithGit] = process.env.REPOSITORY_URL.split(
+        "github.com/"
+      )[1].split("/")
+      const repo = repoWithGit.split('.git')[0]
+      console.log(owner, repo)
       await octokit.request("POST /repos/{owner}/{repo}/statuses/{sha}", {
         owner,
         repo,
