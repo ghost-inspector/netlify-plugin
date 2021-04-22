@@ -28,7 +28,7 @@ module.exports = {
       )[1].split("/")
       await octokit.request("POST /repos/{owner}/{repo}/statuses/{sha}", {
         owner,
-        repo,
+        repo: repo.split('.git')[0],
         sha,
         state,
         description,
