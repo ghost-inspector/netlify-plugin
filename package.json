@@ -14,9 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@octokit/rest": "^18.5.2",
-    "ghost-inspector": "^5.0.1",
-    "git-repo-name": "^1.0.1",
-    "git-username": "^1.0.0"
+    "ghost-inspector": "^5.0.1"
   },
   "repository": {
     "type": "git",
