@@ -21,11 +21,11 @@ module.exports = {
     target_url,
   }) => {
     const octokit = new Octokit({ auth })
-
     try {
-      const [owner, repo] = process.env.REPOSITORY_URL.split(
+      const [owner, repoWithGit] = process.env.REPOSITORY_URL.split(
         "github.com/"
       )[1].split("/")
+      const repo = repoWithGit.split('.git')[0]
       await octokit.request("POST /repos/{owner}/{repo}/statuses/{sha}", {
         owner,
         repo,
