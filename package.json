@@ -13,8 +13,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@octokit/rest": "^18.5.2",
-    "ghost-inspector": "^5.0.1"
+    "@octokit/rest": "^18.5.3",
+    "ghost-inspector": "^5.0.2"
   },
   "repository": {
     "type": "git",
@@ -40,8 +40,8 @@
   },
   "homepage": "https://github.com/ghost-inspector/netlify-plugin#readme",
   "devDependencies": {
-    "eslint": "^7.24.0",
-    "eslint-config-prettier": "^8.2.0",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
