@@ -4,7 +4,9 @@ The official Netlify plugin for [Ghost Inspector](https://ghostinspector.com).
 
 ## Installation
 
-Our official Netlify plugin is available from [npm](https://www.npmjs.com/), you can install it with the following command:
+You can install this plugin in the Netlify UI from this [direct in-app installation link](https://app.netlify.com/plugins/netlify-plugin-ghost-inspector/install) or from the [Plugins directory](https://app.netlify.com/plugins).
+
+You can also install it manually. It is available from [npm](https://www.npmjs.com/) and you can install it with the following command:
 
 ```
 npm install --save-dev netlify-plugin-ghost-inspector
