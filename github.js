@@ -20,8 +20,8 @@ module.exports = {
     // eslint-disable-next-line camelcase
     target_url,
   }) => {
-    const octokit = new Octokit({ auth })
     try {
+      const octokit = new Octokit({ auth })
       const [owner, repoWithGit] = process.env.REPOSITORY_URL.split(
         "github.com/"
       )[1].split("/")
@@ -36,7 +36,7 @@ module.exports = {
         target_url,
       })
     } catch (error) {
-      throw Error(error)
+      console.log(error)
     }
   }
 }
