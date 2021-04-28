@@ -49,58 +49,53 @@ module.exports = {
       )
     }
 
-    let results, passing
+    console.log(`👻 Starting Ghost Inspector E2E tests on ${deployUrl} ...`)
+    ghostInspectorClient(ghostInspectorApiKey)
+      .executeSuite(suiteId, { startUrl: deployUrl })
+      .then(([results, passing]) => {
+        if (!passing) {
+          const testResult = results.map(({ name, passing }) => {
+            return { name, passing }
+          })
 
-    try {
-      console.log(`👻 Starting Ghost Inspector E2E tests on ${deployUrl} ...`)
-      const response = await ghostInspectorClient(ghostInspectorApiKey).executeSuite(suiteId, {
-        startUrl: deployUrl,
-      })
-      results = response[0]
-      passing = response[1]
-    } catch (error) {
-      return utils.build.failPlugin('Failed to execute Ghost Inspector suite.', { error })
-    }
+          // Send a failure status to the GitHub commit
+          if (process.env.GITHUB_API_TOKEN) {
+            updateGithubStatus({
+              auth: process.env.GITHUB_API_TOKEN,
+              sha: process.env.COMMIT_REF,
+              state: "failure",
+              target_url: `https://app.ghostinspector.com/suites/${suiteId}`,
+              description: "At least one test failed",
+            })
+          }
 
-    if (!passing) {
-      const testResult = results.map(({ name, passing }) => {
-        return { name, passing }
-      })
+          return utils.build.failPlugin(
+            `🚫 At least one Ghost Inspector test failed. Visit [https://app.ghostinspector.com/suites/${suiteId}](https://app.ghostinspector.com/suites/${suiteId}) for details. Failed tests:
+            ${testResult}`
+          )
+        }
 
-      // Send a failure status to the GitHub commit
-      if (process.env.GITHUB_API_TOKEN) {
-        await updateGithubStatus({
-          auth: process.env.GITHUB_API_TOKEN,
-          sha: process.env.COMMIT_REF,
-          state: "failure",
-          target_url: `https://app.ghostinspector.com/suites/${suiteId}`,
-          description: "At least one test failed",
+        console.log(`✅ All Ghost Inspector tests passed!`)
+
+        if (process.env.GITHUB_API_TOKEN) {
+          // Send a success status to the Github commit
+          updateGithubStatus({
+            auth: process.env.GITHUB_API_TOKEN,
+            sha: process.env.COMMIT_REF,
+            state: "success",
+            target_url: `https://app.ghostinspector.com/suites/${suiteId}`,
+            description: `All tests passed!`,
+          })
+        }
+
+        utils.status.show({
+          title: `Ghost Inspector E2E tests`,
+          summary: `✅ All tests passed`,
+          text: `Visit https://app.ghostinspector.com/suites/${suiteId} for test results`,
         })
-      }
-
-      return utils.build.failPlugin(
-        `🚫 At least one Ghost Inspector test failed. Visit [https://app.ghostinspector.com/suites/${suiteId}](https://app.ghostinspector.com/suites/${suiteId}) for details. Failed tests:
-        ${testResult}`
-      )
-    }
-
-    console.log(`✅ All Ghost Inspector tests passed!`)
-
-    if (process.env.GITHUB_API_TOKEN) {
-      // Send a success status to the Github commit
-      await updateGithubStatus({
-        auth: process.env.GITHUB_API_TOKEN,
-        sha: process.env.COMMIT_REF,
-        state: "success",
-        target_url: `https://app.ghostinspector.com/suites/${suiteId}`,
-        description: `All tests passed!`,
       })
-    }
-
-    return utils.status.show({
-      title: `Ghost Inspector E2E tests`,
-      summary: `✅ All tests passed`,
-      text: `Visit https://app.ghostinspector.com/suites/${suiteId} for test results`,
-    })
+      .catch(error => {
+        utils.build.failPlugin('Failed to execute Ghost Inspector suite.', { error })
+      })
   },
 }
