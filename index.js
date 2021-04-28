@@ -51,7 +51,7 @@ module.exports = {
 
     console.log(`👻 Starting Ghost Inspector E2E tests on ${deployUrl} ...`)
     ghostInspectorClient(ghostInspectorApiKey)
-      .executeSuite(suiteId, { startUrl: deployUrl })
+      .executeSuite(suiteId, { startUrl: deployUrl, immediate: true })
       .then(([results, passing]) => {
         if (!passing) {
           const testResult = results.map(({ name, passing }) => {
